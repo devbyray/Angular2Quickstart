@@ -40,11 +40,11 @@ describe('HeroService', () => {
         expect(connection.request.method).toBe(RequestMethod.Get);
         connection.mockRespond(new Response(
           new ResponseOptions({
-              body: [
+              body: {"data":[
                 {id: 15, name: 'Me'},
                 {id: 16, name: 'You'},
                 {id: 17, name: 'Him'}
-              ]
+              ]}
             }
           )));
       });
@@ -94,7 +94,7 @@ describe('HeroService', () => {
           expect(connection.request.method).toBe(RequestMethod.Post);
           connection.mockRespond(new Response(
             new ResponseOptions({
-                body: {id: 18, name: 'Ralf'},
+                body: {"data":{id: 18, name: 'Ralf'}},
                 status: 201
               }
             )));
