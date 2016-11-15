@@ -1,4 +1,5 @@
-// from https://github.com/angular/angular-ja/blob/master/public/docs/_examples/testing/ts/testing/router-stubs.ts
+// from https://github.com/angular/angular.io/blob/master/public/docs/_examples/testing/ts/testing/router-stubs.ts
+
 // export for convenience.
 export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 

@@ -1,7 +1,10 @@
 // Straight Jasmine - no imports from Angular test libraries
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {TestBed, getTestBed, async, inject} from "@angular/core/testing";
-import {Headers, BaseRequestOptions, Response, ResponseOptions, HttpModule, Http, XHRBackend, RequestMethod} from '@angular/http';
+import {
+  Headers, BaseRequestOptions, Response, ResponseOptions, HttpModule, Http, XHRBackend, RequestMethod,
+  ResponseType
+} from '@angular/http';
 
 import {Hero} from "./hero";
 import {HeroService} from "./hero.service";
@@ -169,7 +172,7 @@ describe('HeroService', () => {
     });
   });
 
-  it('should handle errors', done => {
+  it('should handle http', done => {
     let heroService: HeroService;
 
     getTestBed().compileComponents().then(() => {
@@ -194,6 +197,35 @@ describe('HeroService', () => {
         expect(reason).toBeDefined();
         done();
       } );
+    });
+  });
+
+  // TODO: cover other branch, handle timeouts
+  it('should handle connection errors', done => {
+    let heroService: HeroService;
+
+    getTestBed().compileComponents().then(() => {
+      mockBackend.connections.subscribe(
+        (connection: MockConnection) => {
+          expect(connection.request.url).toBe('app/heroes');
+          expect(connection.request.method).toBe(RequestMethod.Get);
+          connection.mockRespond(new Response(
+            new ResponseOptions({
+                status: 500
+              }
+            )));
+        });
+
+      heroService = getTestBed().get(HeroService);
+      expect(heroService).toBeDefined();
+
+      heroService.getHero(16).then(() => {
+        fail('promise should not resolve');
+        done();
+      },(reason: any) => {
+        expect(reason).toBeDefined();
+        done();
+      });
     });
   });
 });
