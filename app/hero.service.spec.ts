@@ -172,7 +172,7 @@ describe('HeroService', () => {
     });
   });
 
-  it('should handle http', done => {
+  it('should handle http 403', done => {
     let heroService: HeroService;
 
     getTestBed().compileComponents().then(() => {
@@ -200,7 +200,6 @@ describe('HeroService', () => {
     });
   });
 
-  // TODO: cover other branch, handle timeouts
   it('should handle connection errors', done => {
     let heroService: HeroService;
 
@@ -209,11 +208,7 @@ describe('HeroService', () => {
         (connection: MockConnection) => {
           expect(connection.request.url).toBe('app/heroes');
           expect(connection.request.method).toBe(RequestMethod.Get);
-          connection.mockRespond(new Response(
-            new ResponseOptions({
-                status: 500
-              }
-            )));
+          connection.mockError(new Error());
         });
 
       heroService = getTestBed().get(HeroService);
