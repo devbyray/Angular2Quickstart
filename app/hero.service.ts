@@ -7,10 +7,10 @@ import { Hero } from './hero';
 
 @Injectable()
 export class HeroService {
-  private heroesUrl = 'app/heroes';  // URL to web api
-  private headers = new Headers({'Content-Type': 'application/json'});
+  public heroesUrl = 'app/heroes';  // URL to web api
+  public headers = new Headers({'Content-Type': 'application/json'});
 
-  constructor(private http: Http) { }
+  constructor(public http: Http) { }
 
   getHeroes(): Promise<Hero[]> {
     return this.http.get(this.heroesUrl)
@@ -19,7 +19,7 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  private handleError(error: any): Promise<any> {
+  handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
