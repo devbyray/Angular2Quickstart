@@ -5,6 +5,8 @@ export { HeroService } from './hero.service';
 
 import { Hero }        from './hero';
 import { HeroService } from './hero.service';
+import {HeroSearchService} from "./hero-search.service";
+import {Observable} from "rxjs";
 
 export var HEROES: Hero[] = [
   new Hero(41, 'Bob'),
@@ -14,6 +16,13 @@ export var HEROES: Hero[] = [
   new Hero(45, 'Speedy'),
   new Hero(46, 'Stealthy')
 ];
+
+export class FakeHeroSearchService implements HeroSearchService {
+  http: Http;
+
+  search(term: string): Observable<Hero[]> {
+    return undefined;  }
+}
 
 export class FakeHeroService implements HeroService {
   heroesUrl: string;
