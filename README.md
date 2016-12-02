@@ -1,3 +1,6 @@
+
+[![dependencies Status](https://david-dm.org/silhouette/Angular2Quickstart/status.svg)](https://david-dm.org/silhouette/Angular2Quickstart) [![devDependencies Status](https://david-dm.org/silhouette/Angular2Quickstart/dev-status.svg)](https://david-dm.org/silhouette/Angular2Quickstart?type=dev)
+
 # Angular QuickStart Source
 
 This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
