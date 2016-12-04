@@ -14,12 +14,16 @@ class EmptyComponent{}
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
+  let router = {
+    navigate: jasmine.createSpy('navigate')
+  }
+
 
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
         declarations: [ DashboardComponent, EmptyComponent ],
-        providers: [{ provide: Router, useClass: RouterModule}, {provide: HeroService, useClass: FakeHeroService}]
+        providers: [{provide: Router, useValue: router}, {provide: HeroService, useClass: FakeHeroService}]
       }).overrideComponent(HeroSearchComponent,EmptyComponent)
       .compileComponents();
   }));
@@ -30,11 +34,12 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should load four heroes for dashboard', () => {
     expect(component.heroes.length).toEqual(4);
+  })
+
+  it('should navigate to clicked hero when hero is clicked', () => {
+    component.gotoDetail(component.heroes[2]);
+    expect(router.navigate).toHaveBeenCalledWith([ '/detail', 44 ]);
   })
 });

@@ -17,7 +17,8 @@ module.exports = function(config) {
       require('karma-coverage'),
       require('karma-sourcemap-loader'),
       require('karma-jasmine-html-reporter'), // click "Debug" in browser to see it
-      require('karma-htmlfile-reporter') // crashing w/ strange socket error
+      require('karma-htmlfile-reporter'), // crashing w/ strange socket error
+      require('karma-verbose-reporter')
     ],
 
     customLaunchers: {
@@ -83,7 +84,7 @@ module.exports = function(config) {
 
     exclude: [],
     // disabled HtmlReporter; suddenly crashing w/ strange socket error
-    reporters: ['progress', 'kjhtml', 'coverage'],//'html'],
+    reporters: ['verbose', 'kjhtml', 'coverage'],//'html'],
 
     // HtmlReporter configuration
     htmlReporter: {
