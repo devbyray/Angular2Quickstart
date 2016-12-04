@@ -1,11 +1,6 @@
 // re-export for tester convenience
 import {Headers, Http} from "@angular/http";
-export { Hero }        from './hero';
-export { HeroService } from './hero.service';
-
 import { Hero }        from './hero';
-import { HeroService } from './hero.service';
-import {HeroSearchService} from "./hero-search.service";
 import {Observable} from "rxjs";
 
 export var HEROES: Hero[] = [
@@ -17,14 +12,14 @@ export var HEROES: Hero[] = [
   new Hero(46, 'Stealthy')
 ];
 
-export class FakeHeroSearchService implements HeroSearchService {
+export class FakeHeroSearchService {
   http: Http;
 
   search(term: string): Observable<Hero[]> {
     return undefined;  }
 }
 
-export class FakeHeroService implements HeroService {
+export class FakeHeroService {
   heroesUrl: string;
   headers: Headers;
   http: Http;
