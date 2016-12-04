@@ -23,6 +23,33 @@ export class FakeHeroService {
   heroesUrl: string;
   headers: Headers;
   http: Http;
+  data: Hero[] = HEROES.map(h => h.clone());
+  error: any;
+
+  getHeroes() {
+    return this;
+  }
+
+  then(callback: any) {
+    if (!this.error) {
+      callback(this.data);
+    }
+    return this;
+  }
+
+  catch(callback: any) {
+    if (this.error) {
+      callback(this.error);
+    }
+  }
+
+  setData(data: Hero[]) {
+    this.data = data;
+  }
+
+  setError(error: any) {
+    this.error = error;
+  }
 
   handleError(error: any): Promise<any> {
     return undefined;
@@ -40,19 +67,18 @@ export class FakeHeroService {
     return undefined;
   }
 
-  heroes = HEROES.map(h => h.clone());
   lastPromise: Promise<any>;  // remember so we can spy on promise calls
 
   getHero(id: number | string) {
     if (typeof id === 'string') {
       id = parseInt(id as string, 10);
     }
-    let hero = this.heroes.find(h => h.id === id);
+    let hero = this.data.find(h => h.id === id);
     return this.lastPromise = Promise.resolve(hero);
   }
 
-  getHeroes() {
-    return this.lastPromise = Promise.resolve<Hero[]>(this.heroes);
+  getHeroesOld() {
+    return this.lastPromise = Promise.resolve<Hero[]>(this.data);
   }
 
   updateHero(hero: Hero): Promise<Hero> {

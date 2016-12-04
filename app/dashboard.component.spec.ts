@@ -33,4 +33,8 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load four heroes for dashboard', () => {
+    expect(component.heroes.length).toEqual(4);
+  })
 });
