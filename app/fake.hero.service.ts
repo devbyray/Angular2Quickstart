@@ -94,13 +94,15 @@ export class FakeHeroService {
     }
     this.loadHeroes();
     let hero = this.heroes.find(h => h.id === id);
-    return this.lastPromise = Promise.resolve(hero);
+    this.data = hero;
+    return this;
   }
 
   getHeroesOld() {
     return this.lastPromise = Promise.resolve<Hero[]>(this.data);
   }
 
+  /*
   updateHero(hero: Hero): Promise<Hero> {
     return this.lastPromise = this.getHero(hero.id).then(h => {
       return h ?
@@ -108,4 +110,5 @@ export class FakeHeroService {
         Promise.reject(`Hero ${hero.id} not found`) as any as Promise<Hero>;
     });
   }
+  */
 }
