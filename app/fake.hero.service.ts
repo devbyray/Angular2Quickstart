@@ -23,10 +23,19 @@ export class FakeHeroService {
   heroesUrl: string;
   headers: Headers;
   http: Http;
-  data: Hero[] = HEROES.map(h => h.clone());
+  heroes: Hero[];
+  data: any;
   error: any;
 
+  private loadHeroes() {
+    if(this.heroes == undefined) {
+      this.heroes = HEROES.map(h => h.clone());
+    }
+  }
+
   getHeroes() {
+    this.loadHeroes();
+    this.data = this.heroes.map(h => h.clone());
     return this;
   }
 
@@ -43,10 +52,6 @@ export class FakeHeroService {
     }
   }
 
-  setData(data: Hero[]) {
-    this.data = data;
-  }
-
   setError(error: any) {
     this.error = error;
   }
@@ -55,12 +60,26 @@ export class FakeHeroService {
     return undefined;
   }
 
-  create(name: string): Promise<Hero> {
-    return undefined;
+  create(name: string) {
+    this.loadHeroes();
+    var hero = new Hero(99, name);
+    this.heroes.push(hero);
+    this.data = hero;
+    return this;
   }
 
-  delete(id: number): Promise<boolean> {
-    return undefined;
+  delete(id: number) {
+    this.loadHeroes();
+    var index = this.heroes.indexOf(this.heroes.find(x => x.id == id), 0);
+    if (index > -1) {
+      this.heroes.splice(index, 1);
+      this.data = true;
+    }
+    else
+    {
+      this.data = false;
+    }
+    return this;
   }
 
   update(hero: Hero): Promise<Hero> {
@@ -73,7 +92,8 @@ export class FakeHeroService {
     if (typeof id === 'string') {
       id = parseInt(id as string, 10);
     }
-    let hero = this.data.find(h => h.id === id);
+    this.loadHeroes();
+    let hero = this.heroes.find(h => h.id === id);
     return this.lastPromise = Promise.resolve(hero);
   }
 

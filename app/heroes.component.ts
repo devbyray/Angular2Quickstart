@@ -8,19 +8,13 @@ import { HeroService } from './hero.service';
   selector: 'my-heroes',
   templateUrl: 'app/heroes.component.html',
   styleUrls:  ['app/heroes.component.css'],
-  providers: [HeroService]
 })
 
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
 
-  constructor(
-    private router: Router,
-    private heroService: HeroService) { }
-
-  getHeroes(): void {
-    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  constructor(private router: Router, private heroService: HeroService) {
   }
 
   add(name: string): void {
@@ -43,7 +37,7 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getHeroes();
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
   }
 
   onSelect(hero: Hero): void {
